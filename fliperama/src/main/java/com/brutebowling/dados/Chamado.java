@@ -63,10 +63,10 @@ public class Chamado {
         this.dataConclusao = LocalDate.now();
     }
 
-    public Chamado(Funcionario emissor, Maquina maquina, Funcionario responsavel, String descricao) {
+    public Chamado(Funcionario emissor, Maquina maquina, String descricao) {
         this.emissor = emissor;
         this.maquina = maquina;
-        this.responsavel = responsavel;
+        this.responsavel = null;
         this.descricao = descricao;
         this.concluido = false;
         this.dataConclusao = null;

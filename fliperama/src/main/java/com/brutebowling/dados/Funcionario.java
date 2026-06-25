@@ -38,12 +38,8 @@ public class Funcionario {
             System.out.println("Erro ao criar chamado: maquina invalida.");
             return null;
         }
-        Chamado novoChamado = new Chamado();
-        novoChamado.setEmissor(this);
-        novoChamado.setMaquina(m);
-        novoChamado.setDescricao(desc);
-        novoChamado.setConcluido(false);
-        novoChamado.setDataConclusao(null);
+        Chamado novoChamado = new Chamado(this, m, desc);
+
         return novoChamado;
     }
 
