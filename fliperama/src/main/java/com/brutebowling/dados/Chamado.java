@@ -1,6 +1,6 @@
 package com.brutebowling.dados;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Chamado {
     private Funcionario emissor;
@@ -8,7 +8,7 @@ public class Chamado {
     private Funcionario responsavel;
     private String descricao;
     private boolean concluido;
-    private LocalDate dataConclusao;
+    private Date dataConclusao;
 
     public Funcionario getEmissor() {
         return emissor;
@@ -42,11 +42,11 @@ public class Chamado {
         this.concluido = concluido;
     }
 
-    public LocalDate getDataConclusao() {
+    public Date getDataConclusao() {
         return dataConclusao;
     }
 
-    public void setDataConclusao(LocalDate dataConclusao) {
+    public void setDataConclusao(Date dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
 
@@ -61,7 +61,7 @@ public class Chamado {
     public void completarChamado() {
         this.maquina.manutencaoRealizada();
         this.concluido = true;
-        this.dataConclusao = LocalDate.now();
+        this.dataConclusao = new Date();
     }
 
     public Chamado(Funcionario emissor, Maquina maquina, String descricao) {

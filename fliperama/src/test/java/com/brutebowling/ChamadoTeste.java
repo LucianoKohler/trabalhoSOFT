@@ -32,10 +32,13 @@ public class ChamadoTeste {
         assertFalse(chamado.isConcluido());
         assertNull(chamado.getDataConclusao());
  
+        Date antes = new Date();
         chamado.completarChamado();
+        Date depois = new Date();
  
         assertTrue(chamado.isConcluido());
-        assertEquals(LocalDate.now(), chamado.getDataConclusao());
+        assertFalse(chamado.getDataConclusao().before(antes));
+        assertFalse(chamado.getDataConclusao().after(depois));
     }
  
     @Test
