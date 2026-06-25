@@ -7,6 +7,7 @@ public class Relatorio {
     private Maquina maquina;
     private int qtdUsos;
     private int lucroGerado;
+    private boolean precisaDeManutencao;
 
     public YearMonth getMesAno() {
         return mesAno;
@@ -32,12 +33,19 @@ public class Relatorio {
     public int getLucroGerado() {
         return lucroGerado;
     }
+    public boolean isPrecisaDeManutencao() {
+        return precisaDeManutencao;
+    }
+    public void setPrecisaDeManutencao(boolean precisaDeManutencao) {
+        this.precisaDeManutencao = precisaDeManutencao;
+    }    
 
     public Relatorio(YearMonth mesAno, Maquina maquina, int qtdUsos){
         this.mesAno = mesAno;
         this.maquina = maquina;
         this.qtdUsos = qtdUsos;
         this.lucroGerado = qtdUsos * maquina.getCustoJogada();
+        this.precisaDeManutencao = maquina.getPrecisaDeManutencao();
     }
 
 }

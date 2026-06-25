@@ -39,6 +39,7 @@ public class Funcionario {
             return null;
         }
         Chamado novoChamado = new Chamado(this, m, desc);
+        m.requisitarManutencao();
 
         return novoChamado;
     }
@@ -50,6 +51,7 @@ public class Funcionario {
         }
         c.setResponsavel(this);
         c.completarChamado();
+        
         return true;
     }
 

@@ -59,6 +59,7 @@ public class Chamado {
     }
 
     public void completarChamado() {
+        this.maquina.setPrecisaDeManutencao(false);
         this.concluido = true;
         this.dataConclusao = LocalDate.now();
     }

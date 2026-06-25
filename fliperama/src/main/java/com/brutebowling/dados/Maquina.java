@@ -1,5 +1,6 @@
 package com.brutebowling.dados;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class Maquina {
     private Date dataUltimaManutencao;
     private int custoJogada;
     private List<Date> historicoUsos;
+    private boolean precisaDeManutencao;
 
     public Maquina(String nome, boolean multijogador, int custoJogada) {
         this.nome = nome;
@@ -19,6 +21,7 @@ public class Maquina {
         this.custoJogada = custoJogada;
         this.dataUltimaManutencao = new Date();
         this.historicoUsos = new ArrayList<>();
+        this.precisaDeManutencao = false;
     }
 
     public String getNome() {
@@ -51,18 +54,33 @@ public class Maquina {
     public void registrarUso() {
         historicoUsos.add(new Date());
     }
+    public boolean getPrecisaDeManutencao() {
+        return precisaDeManutencao;
+    }
+    public void setPrecisaDeManutencao(boolean precisaDeManutencao) {
+        this.precisaDeManutencao = precisaDeManutencao;
+    }   
 
     public Relatorio gerarRelatorioManual(Date inicio, Date fim) {
+        LocalDate ultimaManutencao = dataUltimaManutencao.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if(!ultimaManutencao.isAfter(LocalDate.now().minusMonths(3))) requisitarManutencao();
         YearMonth ym = YearMonth.from(fim.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         int usosPeriodo = (int) historicoUsos.stream().filter(d -> !d.before(inicio) && !d.after(fim)).count();
         return new Relatorio(ym, this, usosPeriodo);
     }
 
     public Relatorio gerarRelatorioAutomatico() {
+        LocalDate ultimaManutencao = dataUltimaManutencao.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if(!ultimaManutencao.isAfter(LocalDate.now().minusMonths(3))) requisitarManutencao();
         YearMonth ym = YearMonth.now();
         Date inicioMes = Date.from(ym.atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date fimMes = Date.from(ym.atEndOfMonth().atStartOfDay(ZoneId.systemDefault()).toInstant());
         int usosMes = (int) historicoUsos.stream().filter(d -> !d.before(inicioMes) && !d.after(fimMes)).count();
         return new Relatorio(ym, this, usosMes);
     }
+
+    public void requisitarManutencao(){
+        precisaDeManutencao = true;
+    }
+
 }
