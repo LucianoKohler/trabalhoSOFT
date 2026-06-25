@@ -56,8 +56,8 @@ public class Comanda {
 
     public void pedir(){
         for(Produto p: produtos){
-            p.remocaoDeProduto();
-            total += p.getPreco();
+            if(p.remocaoDeProduto())
+                total += p.getPreco();
         }
 
         produtos.clear();

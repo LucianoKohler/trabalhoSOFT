@@ -58,9 +58,14 @@ public class Produto {
         else estoqueBaixo = false;
     }    
 
-    public void remocaoDeProduto(){
+    public boolean remocaoDeProduto(){
+        if(estoque == 0){
+            System.out.println("Produto nao esta em estoque.");
+            return false;
+        }
         estoque--;
         checarBaixoEstoque();
+        return true;
     }
 
     public void reposicaoDeProduto(int qtd){

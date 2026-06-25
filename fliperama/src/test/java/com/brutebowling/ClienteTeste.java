@@ -3,7 +3,6 @@ package com.brutebowling;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Date;
 
@@ -40,7 +39,7 @@ public class ClienteTeste {
     @Test
     public void testUsaCreditoValido(){
         Maquina mq = new Maquina("Space Invaders", false, 10);
-        assumeTrue(cliente.usaCredito(mq), "Erro no uso da maquina pelo cliente");
+        assertTrue(cliente.usaCredito(mq), "Erro no uso da maquina pelo cliente");
         assertEquals(5, cliente.getCredito(), "Valor nao foi retirado da conta do cliente.");
     }
     @Test
