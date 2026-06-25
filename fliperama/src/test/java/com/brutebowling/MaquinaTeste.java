@@ -18,7 +18,7 @@ public class MaquinaTeste {
  
     @BeforeEach
     public void setUp() {
-        maquina = new Maquina("BowlingPro", true, 5);
+        maquina = new Maquina("Pac-Man",false, 2);
     }
 
     @Test
