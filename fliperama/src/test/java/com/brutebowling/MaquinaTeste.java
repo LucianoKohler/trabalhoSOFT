@@ -41,7 +41,7 @@ public class MaquinaTeste {
     }
 
     @Test
-    void testeManutencaoRealizadaResetaFlagEAtualizaData() {
+    public void testeManutencaoRealizadaResetaFlagEAtualizaData() {
         maquina.setPrecisaDeManutencao(true);
         maquina.setDataUltimaManutencao(menosNMeses(4));
  
