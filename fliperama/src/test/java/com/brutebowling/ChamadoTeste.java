@@ -15,7 +15,7 @@ import com.brutebowling.dados.Chamado;
 import com.brutebowling.dados.Maquina;
 
 public class ChamadoTeste {
-        private Maquina maquina;
+    private Maquina maquina;
     private Chamado chamado;
  
     @BeforeEach
