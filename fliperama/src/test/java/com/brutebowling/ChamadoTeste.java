@@ -19,7 +19,7 @@ public class ChamadoTeste {
     private Chamado chamado;
  
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         maquina = new Maquina("Pac-Man", false, 2);
         maquina.requisitarManutencao();
  
@@ -28,7 +28,7 @@ public class ChamadoTeste {
     }
 
     @Test
-    public void testCompletarChamadoMarcaComoConcluidoERegistraData() {
+    public void testeCompletarChamadoMarcaComoConcluidoERegistraData() {
         assertFalse(chamado.isConcluido());
         assertNull(chamado.getDataConclusao());
  
@@ -39,7 +39,7 @@ public class ChamadoTeste {
     }
  
     @Test
-    void testCompletarChamadoRealizaManutencaoNaMaquina() {
+    public void testeCompletarChamadoRealizaManutencaoNaMaquina() {
         assertTrue(maquina.getPrecisaDeManutencao());
         
         Date antes = new Date();
