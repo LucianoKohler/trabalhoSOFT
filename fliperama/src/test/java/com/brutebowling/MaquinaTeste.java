@@ -18,16 +18,40 @@ public class MaquinaTeste {
  
     @BeforeEach
     public void setUp() {
-        maquina = new Maquina("Pac-Man",false, 2);
+        maquina = new Maquina("Pac-Man", false, 2);
+    }
+
+    // Isso é pra ajudar com as datas pros testes e tals
+    // Pega o dia de hoje menos N meses ou Menos N dias
+    private Date menosNMeses(int meses) {
+        return Date.from(LocalDate.now().minusMonths(meses).atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+ 
+    private Date menosNDias(int dias) {
+        return Date.from(LocalDate.now().minusDays(dias).atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     @Test
-    public void testRequisitarManutencaoSetaFlagComoTrue() {
+    public void testeRequisitarManutencaoSetaFlagComoTrue() {
         assertFalse(maquina.getPrecisaDeManutencao());
  
         maquina.requisitarManutencao();
  
         assertTrue(maquina.getPrecisaDeManutencao());
+    }
+
+    @Test
+    void testeManutencaoRealizadaResetaFlagEAtualizaData() {
+        maquina.setPrecisaDeManutencao(true);
+        maquina.setDataUltimaManutencao(menosNMeses(4));
+ 
+        Date antes = new Date();
+        maquina.manutencaoRealizada();
+        Date depois = new Date();
+ 
+        assertFalse(maquina.getPrecisaDeManutencao());
+        assertFalse(maquina.getDataUltimaManutencao().before(antes));
+        assertFalse(maquina.getDataUltimaManutencao().after(depois));
     }
 
 }
