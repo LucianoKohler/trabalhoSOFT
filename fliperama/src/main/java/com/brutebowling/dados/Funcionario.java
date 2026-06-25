@@ -35,7 +35,6 @@ public class Funcionario {
 
     public Chamado abrirChamado(Maquina m, String desc){
         if(m == null){
-            System.out.println("Erro ao criar chamado: maquina invalida.");
             return null;
         }
         Chamado novoChamado = new Chamado(this, m, desc);
@@ -46,7 +45,6 @@ public class Funcionario {
 
     public boolean atenderChamado(Chamado c){
         if(c.isConcluido()){
-            System.out.println("Chamado ja foi concluido.");
             return false;
         }
         c.setResponsavel(this);
