@@ -33,18 +33,18 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public boolean abrirChamado(Maquina m, String desc){
+    public Chamado abrirChamado(Maquina m, String desc){
         if(m == null){
             System.out.println("Erro ao criar chamado: maquina invalida.");
-            return false;
+            return null;
         }
-        Chamado c = new Chamado();
-        c.setEmissor(this);
-        c.setMaquina(m);
-        c.setDescricao(desc);
-        c.setConcluido(false);
-        c.setDataConclusao(null);
-        return true;
+        Chamado novoChamado = new Chamado();
+        novoChamado.setEmissor(this);
+        novoChamado.setMaquina(m);
+        novoChamado.setDescricao(desc);
+        novoChamado.setConcluido(false);
+        novoChamado.setDataConclusao(null);
+        return novoChamado;
     }
 
     public boolean atenderChamado(Chamado c){
