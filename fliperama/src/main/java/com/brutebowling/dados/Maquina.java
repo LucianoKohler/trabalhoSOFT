@@ -83,4 +83,9 @@ public class Maquina {
         precisaDeManutencao = true;
     }
 
+    public void manutencaoRealizada(){
+        dataUltimaManutencao = new Date();
+        precisaDeManutencao = false;
+    }
+
 }
