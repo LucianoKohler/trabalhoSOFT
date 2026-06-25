@@ -51,15 +51,16 @@ public class Maquina {
     public List<Date> getHistoricoUsos() {
         return historicoUsos;
     }
-    public void registrarUso() {
-        historicoUsos.add(new Date());
-    }
     public boolean getPrecisaDeManutencao() {
         return precisaDeManutencao;
     }
     public void setPrecisaDeManutencao(boolean precisaDeManutencao) {
         this.precisaDeManutencao = precisaDeManutencao;
     }   
+
+    public void registrarUso() {
+        historicoUsos.add(new Date());
+    }
 
     public Relatorio gerarRelatorioManual(Date inicio, Date fim) {
         LocalDate ultimaManutencao = dataUltimaManutencao.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

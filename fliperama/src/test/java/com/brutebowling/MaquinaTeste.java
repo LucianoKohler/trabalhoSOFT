@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.brutebowling.dados.Maquina;
+import com.brutebowling.dados.Relatorio;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -32,6 +33,19 @@ public class MaquinaTeste {
     }
 
     @Test
+    public void testeRegistrarUsoAdicionaDataAoHistorico() {
+        List<Date> historico = maquina.getHistoricoUsos();
+ 
+        assertTrue(historico.isEmpty());
+ 
+        maquina.registrarUso();
+        assertEquals(1, historico.size());
+ 
+        maquina.registrarUso();
+        assertEquals(2, historico.size());
+    }
+
+    @Test
     public void testeRequisitarManutencaoSetaFlagComoTrue() {
         assertFalse(maquina.getPrecisaDeManutencao());
  
@@ -54,4 +68,113 @@ public class MaquinaTeste {
         assertFalse(maquina.getDataUltimaManutencao().after(depois));
     }
 
+    @Test
+    public void testeGerarRelatorioManualSemManutencaoPendente() {
+        maquina.setDataUltimaManutencao(menosNMeses(1));
+
+        maquina.registrarUso();
+        maquina.registrarUso();
+
+        Date inicio = menosNDias(7);
+        Date fim = new Date();
+ 
+        Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(2, relatorio.getQtdUsos());
+        assertEquals(4, relatorio.getLucroGerado());
+        assertFalse(maquina.getPrecisaDeManutencao()); 
+    }
+
+    @Test
+    public void testeGerarRelatorioManualComManutencaoPendente() {
+        maquina.setDataUltimaManutencao(menosNMeses(4));
+        
+        maquina.registrarUso();
+        maquina.registrarUso();
+        
+        Date inicio = menosNDias(7);
+        Date fim = new Date();
+ 
+        Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(2, relatorio.getQtdUsos());
+        assertEquals(4, relatorio.getLucroGerado());
+        assertTrue(maquina.getPrecisaDeManutencao());
+    }
+
+    @Test
+    public void testeGerarRelatorioManualContaApenasUsosDentroDoPeriodo() {
+        maquina.setDataUltimaManutencao(menosNMeses(1));
+ 
+        Date inicio = menosNDias(7);
+        Date fim = menosNDias(1);
+ 
+        maquina.getHistoricoUsos().add(menosNDias(10));
+        maquina.getHistoricoUsos().add(new Date());
+        maquina.getHistoricoUsos().add(menosNDias(5));
+        maquina.getHistoricoUsos().add(menosNDias(1));
+        maquina.getHistoricoUsos().add(menosNDias(3));
+ 
+        Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(3, relatorio.getQtdUsos());
+        assertEquals(6, relatorio.getLucroGerado());
+        assertFalse(maquina.getPrecisaDeManutencao());
+    }
+
+    @Test
+    public void testeGerarRelatorioAutomaticoSemManutencaoPendente() {
+        maquina.setDataUltimaManutencao(menosNMeses(1));
+ 
+        maquina.registrarUso(); 
+        maquina.registrarUso(); 
+ 
+        Relatorio relatorio = maquina.gerarRelatorioAutomatico();
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(2, relatorio.getQtdUsos());
+        assertEquals(4, relatorio.getLucroGerado());
+        assertFalse(maquina.getPrecisaDeManutencao()); 
+    }
+
+    @Test
+    public void testeGerarRelatorioAutomaticoComManutencaoPendente() {
+        maquina.setDataUltimaManutencao(menosNMeses(4));
+ 
+        maquina.registrarUso(); 
+        maquina.registrarUso(); 
+
+        Relatorio relatorio = maquina.gerarRelatorioAutomatico();
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(2, relatorio.getQtdUsos());
+        assertEquals(4, relatorio.getLucroGerado());
+        assertTrue(maquina.getPrecisaDeManutencao()); 
+    }
+
+    @Test
+    public void testeGerarRelatorioAutomaticoIgnoraUsosDeMesesAnteriores() {
+        maquina.setDataUltimaManutencao(menosNMeses(1));
+ 
+        maquina.getHistoricoUsos().add(menosNMeses(2));
+        maquina.getHistoricoUsos().add(menosNMeses(3));
+        maquina.registrarUso(); 
+        maquina.registrarUso(); 
+ 
+        Relatorio relatorio = maquina.gerarRelatorioAutomatico();
+ 
+        assertNotNull(relatorio);
+        assertEquals(maquina, relatorio.getMaquina());
+        assertEquals(2, relatorio.getQtdUsos());
+        assertEquals(4, relatorio.getLucroGerado());
+        assertFalse(maquina.getPrecisaDeManutencao()); 
+    }
 }
