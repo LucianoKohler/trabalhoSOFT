@@ -37,4 +37,19 @@ public class ReservaTeste {
         reserva.renovar(0.0f);
         assertEquals(1.0f, reserva.getTempoReserva(), "Tempo de reserva nao deveria ter sido alterado.");
     }
+
+    @Test
+    public void testAlterarPista(){
+        Pista nPista = new Pista(true, "vip", 1000, new Date());
+        reserva.alterarPista(nPista);
+        assertEquals(nPista, reserva.getPista(), "Pista nao foi trocada.");
+    }
+    
+    @Test
+    public void testAlterarDataReserva(){
+        Date nDate = new Date();
+        nDate.setTime(nDate.getTime() + 365L * 24 * 60 * 60 * 1000);
+        reserva.alterarDataReserva(nDate);
+        assertEquals(nDate, reserva.getDataReserva(), "Data nao foi alterada.");
+    }
 }
