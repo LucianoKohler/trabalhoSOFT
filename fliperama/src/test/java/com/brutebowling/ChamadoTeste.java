@@ -34,9 +34,9 @@ public class ChamadoTeste {
         chamado.completarChamado();
         Date depois = new Date();
  
-        assertTrue(chamado.isConcluido());
-        assertFalse(chamado.getDataConclusao().before(antes));
-        assertFalse(chamado.getDataConclusao().after(depois));
+        assertTrue(chamado.isConcluido(), "Chamado não foi marcado como concluido");
+        assertFalse(chamado.getDataConclusao().before(antes),"Data registrada incorretamente");
+        assertFalse(chamado.getDataConclusao().after(depois), "Data registrada incorretamente");
     }
  
     @Test
@@ -47,9 +47,9 @@ public class ChamadoTeste {
         chamado.completarChamado();
         Date depois = new Date();
 
-        assertFalse(maquina.getPrecisaDeManutencao());
-        assertFalse(maquina.getDataUltimaManutencao().before(antes));
-        assertFalse(maquina.getDataUltimaManutencao().after(depois));
+        assertFalse(maquina.getPrecisaDeManutencao(),"Máquina continua marcada como precisando de manutenção");
+        assertFalse(maquina.getDataUltimaManutencao().before(antes), "Data registrada incorretamente");
+        assertFalse(maquina.getDataUltimaManutencao().after(depois), "Data registrada incorretamente");
     }
 
 }

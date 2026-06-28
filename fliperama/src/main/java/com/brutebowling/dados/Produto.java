@@ -60,7 +60,6 @@ public class Produto {
 
     public boolean remocaoDeProduto(){
         if(estoque == 0){
-            System.out.println("Produto nao esta em estoque.");
             return false;
         }
         estoque--;

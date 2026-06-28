@@ -49,7 +49,6 @@ public class Cliente {
 
     public void recarregaCredito(int qtd){
         if(qtd < 0){
-            System.out.println("Recarga nao pode ser negativa.");
             return;
         }
         credito += qtd;

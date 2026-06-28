@@ -52,7 +52,6 @@ public class Reserva {
 
     public void renovar(float tempo){
         if(tempo < 0.0f){
-            System.out.println("ERRO: Tempo nao pode ser negativo.");
             return;
         }
         tempoReserva += tempo;

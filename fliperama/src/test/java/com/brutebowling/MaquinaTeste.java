@@ -22,8 +22,6 @@ public class MaquinaTeste {
         maquina = new Maquina("Pac-Man", false, 2);
     }
 
-    // Isso é pra ajudar com as datas pros testes e tals
-    // Pega o dia de hoje menos N meses ou Menos N dias
     private Date menosNMeses(int meses) {
         return Date.from(LocalDate.now().minusMonths(meses).atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
@@ -36,22 +34,22 @@ public class MaquinaTeste {
     public void testeRegistrarUsoAdicionaDataAoHistorico() {
         List<Date> historico = maquina.getHistoricoUsos();
  
-        assertTrue(historico.isEmpty());
+        assertTrue(historico.isEmpty(), "Máquina inicializa com lista cheia");
  
         maquina.registrarUso();
-        assertEquals(1, historico.size());
+        assertEquals(1, historico.size(),"Uso não está sendo registrado");
  
         maquina.registrarUso();
-        assertEquals(2, historico.size());
+        assertEquals(2, historico.size(), "Uso não está sendo registrado");
     }
 
     @Test
     public void testeRequisitarManutencaoSetaFlagComoTrue() {
-        assertFalse(maquina.getPrecisaDeManutencao());
+        assertFalse(maquina.getPrecisaDeManutencao(), "Máquina inicializa com flag de manutenção ligada");
  
         maquina.requisitarManutencao();
  
-        assertTrue(maquina.getPrecisaDeManutencao());
+        assertTrue(maquina.getPrecisaDeManutencao(), "Máquina não está ligando flag de manutenção");
     }
 
     @Test
@@ -63,9 +61,9 @@ public class MaquinaTeste {
         maquina.manutencaoRealizada();
         Date depois = new Date();
  
-        assertFalse(maquina.getPrecisaDeManutencao());
-        assertFalse(maquina.getDataUltimaManutencao().before(antes));
-        assertFalse(maquina.getDataUltimaManutencao().after(depois));
+        assertFalse(maquina.getPrecisaDeManutencao(), "Flag de manutenção não foi desligada");
+        assertFalse(maquina.getDataUltimaManutencao().before(antes),"Data registrada incorretamente");
+        assertFalse(maquina.getDataUltimaManutencao().after(depois),"Data registrada incorretamente");
     }
 
     @Test
@@ -80,11 +78,11 @@ public class MaquinaTeste {
  
         Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(2, relatorio.getQtdUsos());
-        assertEquals(4, relatorio.getLucroGerado());
-        assertFalse(maquina.getPrecisaDeManutencao()); 
+        assertNotNull(relatorio, "Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(),"Máquina ligada ao relatório está incorreta");
+        assertEquals(2, relatorio.getQtdUsos(), "Quantidade de usos do relatório está incorreta");
+        assertEquals(4, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertFalse(maquina.getPrecisaDeManutencao(), "Flag de manutenção está incorreta no relatório"); 
     }
 
     @Test
@@ -99,11 +97,11 @@ public class MaquinaTeste {
  
         Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(2, relatorio.getQtdUsos());
-        assertEquals(4, relatorio.getLucroGerado());
-        assertTrue(maquina.getPrecisaDeManutencao());
+        assertNotNull(relatorio,"Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(),"Máquina ligada ao relatório está incorreta");
+        assertEquals(2, relatorio.getQtdUsos(),"Quantidade de usos do relatório está incorreta");
+        assertEquals(4, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertTrue(maquina.getPrecisaDeManutencao(),"Flag de manutenção está incorreta no relatório");
     }
 
     @Test
@@ -121,11 +119,11 @@ public class MaquinaTeste {
  
         Relatorio relatorio = maquina.gerarRelatorioManual(inicio, fim);
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(3, relatorio.getQtdUsos());
-        assertEquals(6, relatorio.getLucroGerado());
-        assertFalse(maquina.getPrecisaDeManutencao());
+        assertNotNull(relatorio,"Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(),"Máquina ligada ao relatório está incorreta");
+        assertEquals(3, relatorio.getQtdUsos(),"Quantidade de usos do relatório está incorreta");
+        assertEquals(6, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertFalse(maquina.getPrecisaDeManutencao(),"Flag de manutenção está incorreta no relatório");
     }
 
     @Test
@@ -137,11 +135,11 @@ public class MaquinaTeste {
  
         Relatorio relatorio = maquina.gerarRelatorioAutomatico();
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(2, relatorio.getQtdUsos());
-        assertEquals(4, relatorio.getLucroGerado());
-        assertFalse(maquina.getPrecisaDeManutencao()); 
+        assertNotNull(relatorio,"Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(),"Máquina ligada ao relatório está incorreta");
+        assertEquals(2, relatorio.getQtdUsos(),"Quantidade de usos do relatório está incorreta");
+        assertEquals(4, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertFalse(maquina.getPrecisaDeManutencao(),"Flag de manutenção está incorreta no relatório"); 
     }
 
     @Test
@@ -153,11 +151,11 @@ public class MaquinaTeste {
 
         Relatorio relatorio = maquina.gerarRelatorioAutomatico();
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(2, relatorio.getQtdUsos());
-        assertEquals(4, relatorio.getLucroGerado());
-        assertTrue(maquina.getPrecisaDeManutencao()); 
+        assertNotNull(relatorio,"Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(),"Máquina ligada ao relatório está incorreta");
+        assertEquals(2, relatorio.getQtdUsos(),"Quantidade de usos do relatório está incorreta");
+        assertEquals(4, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertTrue(maquina.getPrecisaDeManutencao(),"Flag de manutenção está incorreta no relatório"); 
     }
 
     @Test
@@ -171,10 +169,10 @@ public class MaquinaTeste {
  
         Relatorio relatorio = maquina.gerarRelatorioAutomatico();
  
-        assertNotNull(relatorio);
-        assertEquals(maquina, relatorio.getMaquina());
-        assertEquals(2, relatorio.getQtdUsos());
-        assertEquals(4, relatorio.getLucroGerado());
-        assertFalse(maquina.getPrecisaDeManutencao()); 
+        assertNotNull(relatorio,"Relatório não foi criado");
+        assertEquals(maquina, relatorio.getMaquina(), "Máquina ligada ao relatório está incorreta");
+        assertEquals(2, relatorio.getQtdUsos(),"Quantidade de usos do relatório está incorreta");
+        assertEquals(4, relatorio.getLucroGerado(),"Cálculo do lucro está incorreto");
+        assertFalse(maquina.getPrecisaDeManutencao(),"Flag de manutenção está incorreta no relatório"); 
     }
 }
